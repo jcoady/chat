@@ -47,6 +47,7 @@ function newMessage(message) {
 
 
 function init(websocket) {
+    console.log("init websocket");
     return function () {
         $('button[type="submit"]')
             .on('click', onClickFactory(websocket))
@@ -63,7 +64,10 @@ function close() {
 
 
 $(function() {
-    websocket = new WebSocket('ws://127.0.0.1:8000/chat');
+    //websocket = new WebSocket('ws://127.0.0.1:8000/chat');
+    var url = 'wss://' + document.location.hostname + document.location.pathname + '/chat';
+    console.log("url = ",url);
+    websocket = new WebSocket(url);
     websocket.onopen = init(websocket);
     websocket.onerror = websocket.onclose = close;
     websocket.onmessage = newMessage;
